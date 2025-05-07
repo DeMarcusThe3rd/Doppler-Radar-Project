@@ -39,18 +39,18 @@ entity clock_buf is
 end clock_buf;
 
 	architecture Behavioral of clock_buf is
-	signal CLK_DIV : STD_LOGIC_VECTOR(2 downto 0):="000";
-	signal CLK_DIV1 : STD_LOGIC_VECTOR(4 downto 0):="00000";
+	signal CLK_DIV : STD_LOGIC_VECTOR(2 downto 0):="000";   --Fast clock
+	signal CLK_DIV1 : STD_LOGIC_VECTOR(4 downto 0):="00000"; --Slow clock
 begin
 	process(CLK,enable)
 	begin
 	if rising_edge(clk) then
 			CLK_DIV <= CLK_DIV + '1';
-			if (enable='1')then
-				CLK_DIV1 <= CLK_DIV1 + '1';
+			if (enable='1')then   --If enable is 1, that means the start bit has been detected,and we must use slow clock 
+				CLK_DIV1 <= CLK_DIV1 + '1'; 
 			end if;
 			
-			if (enable ='0') then
+			if (enable ='0') then --If enable is 0, that means the start bit has not been detected,and we must use fast clock to detect for start bits 
 				CLK_DIV1 <= (others => '0');
 			end if;
 			
