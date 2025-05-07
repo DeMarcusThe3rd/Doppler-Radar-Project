@@ -38,17 +38,17 @@ entity adder is
 end adder;
 
 architecture Behavioral of adder is
-signal temp : STD_LOGIC_VECTOR(3 downto 0):="0000";
+signal temp : STD_LOGIC_VECTOR(3 downto 0):="0000";  --4-bit counter 
 begin
 	process(clk,clr)
 	begin
-	if (clr='1')then
-		temp <= (others => '0');
-	elsif (clr='0' and clk='1' and clk'EVENT) then 
+	if (clr='1')then  
+		temp <= (others => '0');  --Reset the counter to 0 
+	elsif (clr='0' and clk='1' and clk'EVENT) then  --Keeps track of the 8 data bits on every rising edge  
 		temp <= temp + '1';
 	end if;
 	end process;
 	
-eight <= temp(3);
+eight <= temp(3); --eight bits have been counted
 end Behavioral;
 
