@@ -50,17 +50,18 @@ architecture Behavioral of shift_register is
 begin		
 	process (clk,clr,adder_in)
 	begin
-		if(clr = '1')then
-			temp <= (others => '0');
-			BCD1 <= (others => '0');
-			BCD2 <= (others => '0');
+		if(clr = '1')then  
+			temp <= (others => '0');  --Reset the shift register contents to 0
+			BCD1 <= (others => '0');  --Reset BCD inputs to 0
+			BCD2 <= (others => '0');  --Reset BCD inputs to 0
 		elsif(clk = '1' and clk'EVENT and enable ='1') then
-			temp <= temp(6 downto 0) & din; 
+			temp <= temp(6 downto 0) & din; --Shift the data bits to the left 
 		end if;
-		if adder_in = '1' then
-			BCD1 <= temp(7 downto 4);
+		if adder_in = '1' then    --8 bits have been counted 
+		--extract the 8 bits into two 4 bits for 7-segment  
+			BCD1 <= temp(7 downto 4);  
 			BCD2 <= temp(3 downto 0);
 		end if;
 	end process;
-dout <= temp;
+dout <= temp;  
 end Behavioral;
